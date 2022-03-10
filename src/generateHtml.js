@@ -49,7 +49,7 @@ function generateInternCard(intern) {
       <ul class="list-group">
         <li class="list-group-item">ID: ${intern.getId()}</li>
         <li class="list-group-item"><a href="mailto: ${intern.getEmail()}</li>
-        <li class="list-group-item">School: ${intern.school()}</li>
+        <li class="list-group-item">School: ${intern.getSchool()}</li>
       </ul>  
     </div>
   </div>`
@@ -69,5 +69,40 @@ function generateEngineerCard(engineer) {
   </div>`
 }
 
-function generateCards
+// push array to page 
+generateCards = (data) => {
 
+    // array for cards 
+    pageArray = []; 
+
+    for (let i = 0; i < data.length; i++) {
+        const teammate = data[i];
+        const position = teammate.getRole(); 
+
+
+        if (position === 'Manager') {
+            const managerCard = generateManagerCard(teammate);
+
+            pageArray.push(managerCard);
+        }
+
+        if (position === 'Engineer') {
+            const engineerCard = generateEngineerCard(teammate);
+
+            pageArray.push(engineerCard);
+        }
+ 
+        if (position === 'Intern') {
+            const internCard = generateInternCard(teammate);
+
+            pageArray.push(internCard);
+        }
+        
+    }
+    const memberCard = pageArray.join('')
+
+    const generateTeam = generateCards(memberCard);
+    return generateTeam;
+}
+
+module.exports = generateHtml;

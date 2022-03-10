@@ -152,13 +152,34 @@ const employeeInfo = () => {
                         },
                     ])
                     .then((res) => {
-                        team.push(new Intern(res.name, res.id, res.email, res.school));
-                        console.log('intern info added');
-                            
-                                });
-                            }
+                        team.push(new Intern(res.name, res.id, res.email, res.gitHub));
+                        console.log('engineer info successfully added');
+                        if (res.addEmployee === true) {
+                            employeeInfo();
+                        } else {
+                            return inquirer.prompt([
+                                {
+                                    type: 'confirm',
+                                    name: 'completeTeam',
+                                    mesage: 'finish building your team?',
+                                    default: false,
+                                    
+                                },
+                            ])
+                            .then((res) => {
+                                if (res.completeTeam === true) {
+                                    writeToFile();
+                                    console.log('Team built');
+                                }else{
+                                    employeeInfo();
+                                }
+                            });
                     
-                        });   
+                        }    
+                        
+                    });
+        }
+    });
                               
 }
 
