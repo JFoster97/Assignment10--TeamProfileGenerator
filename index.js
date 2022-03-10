@@ -63,46 +63,63 @@ const employeeInfo = () => {
             choices: ["Engineer", "Intern"],
 
         },
-        {
-            type: 'input',
-            name: 'name',
-            message: 'What is the name of the employee?',
-        },
-        {
-            type: 'input',
-            name: 'id',
-            message: "enter employee ID",
-        },
-        {
-            type: 'input',
-            name: 'email',
-            message: "Enter the employee's email address",
-        },
-        {
-            type: 'input',
-            name: 'gitHub',
-            message: 'Please enter thier github username',
-            when: (input) => input.role === "Engineer",
-        },
-        {
-            type: 'input',
-            name: 'school',
-            message: 'Please enter the name of their college or university',
-            when: (input) => input.role === "Intern",
-        }
-        {
-            type: 'confirm',
-            name: 'anotherEmployee',
-            message: 'would you like to add another employee?',
-            default: false
-        }
-        
     ])
     .then ((res) => {
         if (res.role === 'Engineer') {
-            team.push(new Engineer(res.name, res.id, res.email, res.gitHub));
+                return inquirer.prompt([
+                    {
+                        type: 'input',
+                        name: 'name',
+                        message: 'What is the name of the employee?',
+                    },
+                    {
+                        type: 'input',
+                        name: 'id',
+                        message: "enter employee ID",
+                    },
+                    {
+                        type: 'input',
+                        name: 'email',
+                        message: "Enter the employee's email address",
+                    },
+                    {
+                        type: 'input',
+                        name: 'gitHub',
+                        message: 'Please enter thier github username',
+                    },
+                ])
+                .then((res) => {
+                    team.push(new Engineer(res.name, res.id, res.email, res.gitHub));
+                });
         } else {
-            team.push(new Intern(res.name, res.id, res.email, res.school));
-        }
-    })
+                 return inquirer.prompt ([
+                        {
+                            type: 'input',
+                            name: 'name',
+                            message: 'What is the name of the employee?',
+                        },
+                        {
+                            type: 'input',
+                            name: 'id',
+                            message: "enter employee ID",
+                        },
+                        {
+                            type: 'input',
+                            name: 'email',
+                            message: "Enter the employee's email address",
+                        },
+                        {
+                            type: 'input',
+                            name: 'school',
+                            message: 'Please enter the name of their college or university',
+                        },
+                    ])
+                    .then((res) => {
+                        team.push(new Intern(res.name, res.id, res.email, res.school));
+                    });  
+            }
+    }
 }
+
+
+
