@@ -46,9 +46,15 @@ const managerInfo = () => {
             default: false,
         },
     ])
+    .then((res) => {
+        team.push(new Manager(res.managerName, res.id, res.email, res.officeNumber));
+        employeeInfo();
+
+    });
 };
 
-const EmployeeInfo = () => {
+
+const employeeInfo = () => {
     return inquirer.prompt([
         {
             type: 'list',
@@ -84,6 +90,19 @@ const EmployeeInfo = () => {
             message: 'Please enter the name of their college or university',
             when: (input) => input.role === "Intern",
         }
+        {
+            type: 'confirm',
+            name: 'anotherEmployee',
+            message: 'would you like to add another employee?',
+            default: false
+        }
         
     ])
+    .then ((res) => {
+        if (res.role === 'Engineer') {
+            team.push(new Engineer(res.name, res.id, res.email, res.gitHub));
+        } else {
+            team.push(new Intern(res.name, res.id, res.email, res.school));
+        }
+    })
 }
