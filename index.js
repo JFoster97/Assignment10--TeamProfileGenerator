@@ -48,6 +48,7 @@ const managerInfo = () => {
     ])
     .then((res) => {
         team.push(new Manager(res.managerName, res.id, res.email, res.officeNumber));
+        console.log('manager info successfully added');
         employeeInfo();
 
     });
@@ -87,10 +88,40 @@ const employeeInfo = () => {
                         name: 'gitHub',
                         message: 'Please enter thier github username',
                     },
+                    {
+                        type: 'confirm',
+                        name: 'addEmployee',
+                        message: 'Would you like to add another employee?',
+                        default: false,
+                    },
                 ])
                 .then((res) => {
                     team.push(new Engineer(res.name, res.id, res.email, res.gitHub));
-                });
+                    console.log('engineer info successfully added');
+                    if (res.addEmployee === true) {
+                        employeeInfo();
+                    } else {
+                        return inquirer.prompt([
+                            {
+                                type: 'confirm',
+                                name: 'completeTeam',
+                                mesage: 'finish building your team?',
+                                default: false,
+                                
+                            },
+                        ])
+                        .then((res) => {
+                        if (res.completeTeam === true) {
+                            writeToFile();
+                            console.log('Team built');
+                        }else{
+                            employeeInfo();
+                        }
+                    });
+                }
+                    
+                    
+            });
         } else {
                  return inquirer.prompt ([
                         {
@@ -113,13 +144,28 @@ const employeeInfo = () => {
                             name: 'school',
                             message: 'Please enter the name of their college or university',
                         },
+                        {
+                            type: 'confirm',
+                            name: 'addEmployee',
+                            message: 'Would you like to add another employee?',
+                            default: false,
+                        },
                     ])
                     .then((res) => {
                         team.push(new Intern(res.name, res.id, res.email, res.school));
-                    });  
-            }
-    }
+                        console.log('intern info added');
+                            
+                                });
+                            }
+                    
+                        });   
+                              
 }
 
 
+function startApp() {
+    managerInfo();
+}
+
+startApp();
 

@@ -1,0 +1,3 @@
+function generateManagerCard(manager) {
+    return ``
+}
