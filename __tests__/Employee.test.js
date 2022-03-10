@@ -12,4 +12,5 @@ describe ('Employee class', () => {
     it('getEmail should return Employee email', () => {
         expect(new Employee('Kanye', 2, 'kanye@gmail.com').getEmail()).toBe('kanye@gmail.com')
     })
+
 })
